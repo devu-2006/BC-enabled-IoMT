@@ -1,0 +1,10 @@
+{
+  "registerEntity(hospital)": 315957,
+  "registerEntity(doctor)": 281613,
+  "registerEntity(patient)": 281613,
+  "registerEntity(device)": 281637,
+  "issueCertificate": 509297,
+  "grantAccess": 167692,
+  "requestAccess": 137324,
+  "revokeAccess": 118092
+}

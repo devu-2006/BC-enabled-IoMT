@@ -1,0 +1,12 @@
+# Gap analysis of the base paper (DRAFT - verify every point against the paper before using)
+
+| # | Observation in base paper | Where | Our response |
+|---|---|---|---|
+| G1 | No access-control model (roles, consent, revocation, emergency access, audit) although registration and credentials are described | Sec. 3.1 | C2: consent-based ABAC with revocation and break-glass |
+| G2 | Gas/storage design not optimized; costs reported only for a naive design | Sec. 5.2, Tables 2, 7 | C1: baseline vs optimized contract, measured gas |
+| G3 | Verification equation written as g^r = C.S^c; correct Schnorr check is g^z = C.S^c. On-chain `g**z % p` is not safe for large moduli | Sec. 3.4, verifier contract | C3: corrected NIZKP using modexp precompile, with a test |
+| G4 | Interactive step (verifier sends challenge) remains in Algorithm 3.3 although Fiat-Shamir is claimed | Algorithm 3.3 | C3 |
+| G5 | "FHE" example uses Paillier-type formulas (g^m r^n mod n^2), which are additively homomorphic only | Sec. 3.3, Table 19 | Future work / terminology correction |
+| G6 | IDS is isolated: detection triggers no on-chain action; split/leakage not discussed | Sec. 3.5, Table 18 | C4: leakage-safe evaluation, feature reduction, suspension hook |
+| G7 | Results from Ganache/dummy data; consensus (PoW+PBFT) not realizable on Ethereum as described | Sec. 5.1, 5.3 | Limitations section; our numbers are reported as baseline-vs-optimized |
+| G8 | Internal inconsistencies: units (Gwei vs gas, s vs ms), identical Tables 12/13 and 15/16, SVM accuracy 96.4 (table) vs 96.7 (text), f+1 vs 2f+1 | Sec. 3.2, 5 | Note in discussion; do not reuse these numbers |
