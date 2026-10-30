@@ -1,0 +1,15 @@
+{
+  "registerEntity(hospital)": 69657,
+  "registerEntity(doctor)": 69645,
+  "registerEntity(patient)": 69657,
+  "registerEntity(device)": 69657,
+  "issueCertificate": 97958,
+  "grantAccess": 50796,
+  "requestAccess": 33369,
+  "revokeAccess": 24001,
+  "grantAccess(1h)": 50921,
+  "suspendEntity": 30811,
+  "setEmergencyPolicy": 47654,
+  "emergencyAccess": 39745,
+  "registerEntities(4 batch)": 217336
+}

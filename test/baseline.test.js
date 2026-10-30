@@ -7,8 +7,8 @@ describe("HealthcareBaseline", function () {
   const gas = new GasRecorder("baseline");
   const credHash = (s) => ethers.keccak256(ethers.toUtf8Bytes(s));
   const certId = ethers.keccak256(ethers.toUtf8Bytes("cert-1"));
-  const encData = ethers.hexlify(ethers.randomBytes(128)); // stands in for encrypted record
-  const sig = ethers.hexlify(ethers.randomBytes(65));
+  const encData = ethers.hexlify(new Uint8Array(128).fill(7)); // fixed bytes -> reproducible gas
+  const sig = ethers.hexlify(new Uint8Array(65).fill(9));
 
   before(async () => {
     [authority, hospital, doctor, patient, device] = await ethers.getSigners();
