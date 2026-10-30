@@ -1,0 +1,71 @@
+Non-numeric columns: ['Dir', 'Flgs', 'SrcAddr', 'DstAddr', 'Sport', 'SrcMac', 'DstMac', 'Attack Category']
+
+Majority-class accuracy (always predict 'normal'): 0.8746
+Attack share: 0.1254
+
+--- Attack Category vs Label (category is derived from the label -> drop it) ---
+Label                0     1
+Attack Category             
+Data Alteration      0   922
+Spoofing             0  1124
+normal           14272     0
+
+--- Low-cardinality text columns vs Label ---
+
+Dir:
+Label      0     1
+Dir               
+->     14272  2046
+
+Flgs:
+Label          0    1
+Flgs                 
+M              2  922
+M *            7    0
+M d            2    1
+MR             0    1
+e          14253  984
+e s            8    0
+eR             0  138
+
+SrcAddr:
+Label           0     1
+SrcAddr                
+10.0.1.172  14272  2046
+
+DstAddr:
+Label           0     1
+DstAddr                
+10.0.1.150  14272  2046
+
+SrcMac:
+Label                  0     1
+SrcMac                        
+84:3a:4b:0f:5b:94  14272     0
+d8:9e:f3:95:02:75      0  2046
+
+DstMac:
+Label                  0     1
+DstMac                        
+b8:ca:3a:cf:0b:87  14272  2046
+
+--- Top single-feature models (depth-3 tree, 70/30 stratified split) ---
+feature                  AUC      F1
+SrcMac                 1.000   1.000
+DIntPkt                0.848   0.632
+DstJitter              0.848   0.640
+SrcLoad                0.823   0.628
+SIntPkt                0.823   0.627
+Dur                    0.822   0.625
+DstLoad                0.822   0.629
+Rate                   0.821   0.627
+Load                   0.821   0.627
+Flgs                   0.775   0.707
+SrcJitter              0.675   0.044
+Pulse_Rate             0.584   0.000
+SpO2                   0.535   0.073
+DIA                    0.532   0.010
+Packet_num             0.532   0.054
+
+Number of contiguous label runs in file order: 169
+Average run length: 96.6 rows

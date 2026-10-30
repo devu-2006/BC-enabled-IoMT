@@ -1,0 +1,118 @@
+File: wustl-ehms-2020_with_attacks_categories.csv
+Shape (rows, columns): (16318, 45)
+Full-row duplicates: 0
+Total missing values: 0
+
+--- Columns (dtype | unique values | missing) ---
+'Dir'                               str               1      0
+'Flgs'                              str               7      0
+'SrcAddr'                           str               1      0
+'DstAddr'                           str               1      0
+'Sport'                             str           16314      0
+'Dport'                             int64             1      0
+'SrcBytes'                          int64            15      0
+'DstBytes'                          int64            14      0
+'SrcLoad'                           float64        8353      0
+'DstLoad'                           float64        8195      0
+'SrcGap'                            int64             1      0
+'DstGap'                            int64             1      0
+'SIntPkt'                           float64        8505      0
+'DIntPkt'                           float64        6094      0
+'SIntPktAct'                        float64           8      0
+'DIntPktAct'                        int64             1      0
+'SrcJitter'                         float64       16212      0
+'DstJitter'                         float64        6046      0
+'sMaxPktSz'                         int64             2      0
+'dMaxPktSz'                         int64             2      0
+'sMinPktSz'                         int64             2      0
+'dMinPktSz'                         int64             1      0
+'Dur'                               float64        8504      0
+'Trans'                             int64             1      0
+'TotPkts'                           int64            12      0
+'TotBytes'                          int64            19      0
+'Load'                              float64        8385      0
+'Loss'                              int64             3      0
+'pLoss'                             float64           6      0
+'pSrcLoss'                          float64           3      0
+'pDstLoss'                          float64           4      0
+'Rate'                              float64        8425      0
+'SrcMac'                            str               2      0
+'DstMac'                            str               1      0
+'Packet_num'                        int64         16306      0
+'Temp'                              float64          53      0
+'SpO2'                              int64            18      0
+'Pulse_Rate'                        int64            78      0
+'SYS'                               int64            12      0
+'DIA'                               int64            19      0
+'Heart_rate'                        int64            72      0
+'Resp_Rate'                         int64            50      0
+'ST'                                float64          40      0
+'Attack Category'                   str               3      0
+'Label'                             int64             2      0
+
+--- Candidate label columns (name contains 'label' or 'attack') ---
+
+Attack Category:
+Attack Category
+normal             14272
+Spoofing            1124
+Data Alteration      922
+
+Label:
+Label
+0    14272
+1     2046
+
+--- Non-numeric columns (possible identifiers / leakage risks) ---
+none
+
+--- Constant columns (no information) ---
+['Dir', 'SrcAddr', 'DstAddr', 'Dport', 'SrcGap', 'DstGap', 'DIntPktAct', 'dMinPktSz', 'Trans', 'DstMac']
+
+--- First 3 rows (transposed) ---
+                                 0                  1                  2
+Dir                             ->                 ->                 ->
+Flgs                     e                  e                  e        
+SrcAddr                 10.0.1.172         10.0.1.172         10.0.1.172
+DstAddr                 10.0.1.150         10.0.1.150         10.0.1.150
+Sport                        58059              58062              58065
+Dport                         1111               1111               1111
+SrcBytes                       496                496                496
+DstBytes                       186                186                186
+SrcLoad                   276914.0           230984.0           218470.0
+DstLoad                    92305.0            76995.0            72823.0
+SrcGap                           0                  0                  0
+DstGap                           0                  0                  0
+SIntPkt                   3.582333           4.294667           4.540667
+DIntPkt                     1.9015             2.9015             3.2945
+SIntPktAct                     0.0                0.0                0.0
+DIntPktAct                       0                  0                  0
+SrcJitter                 2.946239           3.091654           2.849841
+DstJitter                   1.6235             2.8625             3.1655
+sMaxPktSz                      310                310                310
+dMaxPktSz                       66                 66                 66
+sMinPktSz                       60                 60                 60
+dMinPktSz                       60                 60                 60
+Dur                       0.010747           0.012884           0.013622
+Trans                            1                  1                  1
+TotPkts                          7                  7                  7
+TotBytes                       682                682                682
+Load                      369219.0           307979.0           291293.0
+Loss                             0                  0                  0
+pLoss                          0.0                0.0                0.0
+pSrcLoss                       0.0                0.0                0.0
+pDstLoss                       0.0                0.0                0.0
+Rate                       558.295            465.694            440.464
+SrcMac           84:3a:4b:0f:5b:94  84:3a:4b:0f:5b:94  84:3a:4b:0f:5b:94
+DstMac           b8:ca:3a:cf:0b:87  b8:ca:3a:cf:0b:87  b8:ca:3a:cf:0b:87
+Packet_num                       1                  2                  3
+Temp                          28.9               28.9               28.9
+SpO2                             0                  0                 89
+Pulse_Rate                       0                  0                104
+SYS                              0                  0                  0
+DIA                              0                  0                  0
+Heart_rate                       0                 78                 78
+Resp_Rate                        0                 17                 17
+ST                             0.0                0.4                0.4
+Attack Category             normal             normal             normal
+Label                            0                  0                  0
