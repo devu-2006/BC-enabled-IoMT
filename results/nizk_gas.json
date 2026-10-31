@@ -1,5 +1,5 @@
 {
-  "verifyProof (estimateGas, incl. 21000 base)": 27852,
-  "verifyAndRecord (tx)": 29382,
-  "one 2048-bit modexp (estimateGas, incl. 21000 base)": 563048
+  "verifyProof (estimateGas, incl. 21000 base)": 27840,
+  "verifyAndRecord (tx)": 29370,
+  "one 2048-bit modexp (estimateGas, incl. 21000 base)": 560960
 }

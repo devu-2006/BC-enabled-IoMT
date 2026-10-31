@@ -5,3 +5,7 @@ cache/
 __pycache__/
 *.ipynb_checkpoints
 ids/data/
+nizk_service/.venv/
+nizk_service/keystore*.json
+nizk_service/__pycache__/
+.pytest_cache/
