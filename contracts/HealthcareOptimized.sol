@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
+import { SchnorrLib } from "./SchnorrNIZK.sol";
 
 /**
  * OPTIMIZED contract (C1) with consent-based access control (C2).
@@ -40,6 +41,12 @@ contract HealthcareOptimized {
     mapping(address => mapping(address => uint48)) public accessExpiry; // patient => grantee => expiry
     mapping(address => bool) public emergencyAllowed;                   // patient policy
 
+    struct ProofKey {
+        bytes32 px;     // x-coordinate of the hospital's Schnorr public key
+        uint8 parity;   // 0 = even y, 1 = odd y
+    }
+    mapping(address => ProofKey) public proofKeys;                      // hospital => NIZKP public key
+
     error NotAuthority();
     error NotAuthorized();
     error AlreadyRegistered();
@@ -49,6 +56,8 @@ contract HealthcareOptimized {
     error NoAccess();
     error BadCertificate();
     error EmergencyNotAllowed();
+    error BadProof();
+    error NoProofKey();
 
     event EntityRegistered(address indexed entity, Role role, bytes32 credentialHash);
     event EntitySuspended(address indexed entity, address indexed by);
@@ -59,6 +68,7 @@ contract HealthcareOptimized {
     event AccessUsed(address indexed patient, address indexed requester, bytes32 indexed certId);
     event EmergencyPolicyChanged(address indexed patient, bool allowed);
     event EmergencyAccess(address indexed patient, address indexed doctor, bytes32 reasonHash, uint48 until);
+    event ProofKeySet(address indexed hospital, bytes32 px, uint8 parity);
 
     constructor() {
         authority = msg.sender;
@@ -134,6 +144,52 @@ contract HealthcareOptimized {
         Certificate storage c = certificates[uniqueID];
         if (!c.valid) return false;
         return c.commitment == keccak256(abi.encodePacked(uniqueID, c.dataRef, sigHash));
+    }
+
+    // ---------------------------------------------------------------- NIZKP-gated issuance (C3)
+    /// Message a hospital signs to prove it owns its proof key (proof of possession).
+    function keyRegistrationMessage(address hospital) public view returns (bytes32) {
+        return keccak256(abi.encodePacked("KEYREG", block.chainid, address(this), hospital));
+    }
+
+    /// Message bound by the proof when issuing a certificate (chain, contract, issuer, patient, certificate).
+    function certificateProofMessage(
+        address issuer,
+        address patient,
+        bytes32 uniqueID,
+        bytes32 dataRef,
+        bytes32 sigHash
+    ) public view returns (bytes32) {
+        return keccak256(abi.encodePacked(block.chainid, address(this), issuer, patient, uniqueID, dataRef, sigHash));
+    }
+
+    /// A hospital registers its Schnorr public key, proving it knows the secret key.
+    function setProofKey(bytes32 px, uint8 parity, bytes32 e, bytes32 s) external {
+        if (!_isActive(msg.sender, Role.Hospital)) revert NotAuthorized();
+        if (!SchnorrLib.verify(px, parity, keyRegistrationMessage(msg.sender), e, s)) revert BadProof();
+        proofKeys[msg.sender] = ProofKey(px, parity);
+        emit ProofKeySet(msg.sender, px, parity);
+    }
+
+    /// Certificate issuance that additionally requires a valid NIZKP from the issuing hospital.
+    function issueCertificateWithProof(
+        address patient,
+        bytes32 uniqueID,
+        bytes32 dataRef,
+        bytes32 sigHash,
+        bytes32 e,
+        bytes32 s
+    ) external {
+        if (!_isActive(msg.sender, Role.Hospital)) revert NotAuthorized();
+        ProofKey memory k = proofKeys[msg.sender];
+        if (k.px == bytes32(0)) revert NoProofKey();
+        bytes32 message = certificateProofMessage(msg.sender, patient, uniqueID, dataRef, sigHash);
+        if (!SchnorrLib.verify(k.px, k.parity, message, e, s)) revert BadProof();
+        if (!_isActive(patient, Role.Patient)) revert NotFound();
+        if (certificates[uniqueID].issuedAt != 0) revert IdExists();
+        bytes32 commitment = keccak256(abi.encodePacked(uniqueID, dataRef, sigHash));
+        certificates[uniqueID] = Certificate(patient, uint48(block.timestamp), true, dataRef, commitment);
+        emit CertificateIssued(uniqueID, patient, msg.sender, dataRef, commitment);
     }
 
     // ---------------------------------------------------------------- consent
