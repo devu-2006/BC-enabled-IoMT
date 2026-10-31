@@ -8,6 +8,7 @@
     "gas": "REPORT_GAS=true hardhat test"
   },
   "devDependencies": {
+    "@noble/curves": "^1.2.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "hardhat": "^2.22.0"
   }
