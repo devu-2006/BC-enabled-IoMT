@@ -1,0 +1,46 @@
+{
+  "thresholds": {
+    "high": 0.95,
+    "low": 0.5,
+    "min_hits": 3,
+    "window": 100
+  },
+  "decisions": [
+    {
+      "device": "device-A",
+      "true_category": "normal",
+      "rows": 100,
+      "max_score": 0.3175,
+      "rows_high": 0,
+      "rows_alert": 0,
+      "decision": "ok"
+    },
+    {
+      "device": "device-B",
+      "true_category": "Data Alteration",
+      "rows": 100,
+      "max_score": 1.0,
+      "rows_high": 100,
+      "rows_alert": 100,
+      "decision": "suspend"
+    },
+    {
+      "device": "device-C",
+      "true_category": "Spoofing",
+      "rows": 100,
+      "max_score": 0.9996,
+      "rows_high": 39,
+      "rows_alert": 100,
+      "decision": "suspend"
+    },
+    {
+      "device": "device-D",
+      "true_category": "normal",
+      "rows": 100,
+      "max_score": 0.4178,
+      "rows_high": 0,
+      "rows_alert": 0,
+      "decision": "ok"
+    }
+  ]
+}
