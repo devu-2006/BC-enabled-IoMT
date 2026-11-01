@@ -10,3 +10,5 @@ nizk_service/keystore*.json
 nizk_service/__pycache__/
 .pytest_cache/
 ids/models/
+gateway/store/
+gateway/deployment.json
